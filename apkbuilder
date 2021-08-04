@@ -1,0 +1,71 @@
+#!/bin/sh -eu
+
+usage() {
+	printf "%s\n\n" "Usage: $0 [action] [flags...] [args...]"
+	printf "\n%s\n" "$0 build <packages...>"
+	printf "\t%s\n" "Update repository and build the specified packages, or all of them"
+	printf "\n%s\n" "$0 update"
+	printf "\t%s\n" "Update repository"
+}
+
+main_repository() {
+	printf "%s" "$HOME/pacotes.eletrotupi.com"
+}
+
+pkgdir() {
+	printf "%s/pkgs/%s" $(main_repository) $1
+}
+
+build() {
+	update
+	pkgs=""
+
+	if [ $# -eq 0 ]
+	then
+		printf "No package specified. Building everyone. \n\n"
+
+		# Get all packages, excluding . & pkgs. Then strip pkgs from each line
+		pkgs="$(find pkgs -maxdepth 1 -type d -not -name . -not -name pkgs | sed -e 's/pkgs\///')"
+	else
+		pkgs="$@"
+	fi
+
+	for pkg in "$pkgs"
+	do
+		echo "$pkg"
+	done
+}
+
+build_package() {
+	printf "Building %s\n\n" $1
+	cd $(pkgdir $1)
+
+	abuild -r
+}
+
+update() {
+	repositories=$(main_repository)
+	cd "$repositories"
+	git pull origin master
+}
+
+if [ $# -lt 1 ]
+then
+	usage
+	exit 1
+fi
+
+cmd="$1"
+shift
+
+case "$cmd" in
+	update)
+		update "$@"
+		;;
+	build)
+		build "$@"
+		;;
+	help|-h)
+		usage
+		;;
+esac
