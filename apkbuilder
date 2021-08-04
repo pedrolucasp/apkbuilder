@@ -32,7 +32,7 @@ build() {
 
 	for pkg in "$pkgs"
 	do
-		echo "$pkg"
+		build_package "$pkg"
 	done
 }
 
