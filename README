@@ -1,14 +1,14 @@
-								apkbuilder
+				         apkbuilder
 
 It automatically keeps everything tidy on a package repository of APKBUILDs.
 
-								  USAGE
+				           USAGE
 
-Run apkbuilder update to update the repository. It'll basically fetch from
-origin master.
+Run apkbuilder update to update the Alpine repository. It'll basically fetch
+from a remote named origin in the branch master.
 
 Run apkbuilder build to rebuild every package or specify a list of packages.
 
-								   LICENSE
+				         LICENSE
 
-Check COPYING, but it's under the terms of the MIT license.
+Check COPYING, but it's under the terms of the MIT License.
