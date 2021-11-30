@@ -9,10 +9,12 @@ usage() {
 }
 
 main_repository() {
+	# TODO: Define a user-configurable variable
 	printf "%s" "$HOME/pacotes.eletrotupi.com"
 }
 
 pkgdir() {
+	# TODO: Define a user-configurable variable
 	printf "%s/pkgs/%s" $(main_repository) $1
 }
 
@@ -46,6 +48,7 @@ build_package() {
 update() {
 	repositories=$(main_repository)
 	cd "$repositories"
+	# TODO: Allow to pick a remote and a branch
 	git pull origin master
 }
 
